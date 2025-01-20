@@ -44,5 +44,5 @@ MiniDeps.later(function()
   --  ╭─────────────────────────────────────────────────────────╮
   --  │                     Terminal                            │
   --  ╰─────────────────────────────────────────────────────────╯
-  vim.keymap.set('n', '<c-/>', function() Snacks.terminal() end, { desc = 'Toggle Terminal' })
+  vim.keymap.set({ 'n', 't' }, '<c-/>', function() Snacks.terminal() end, { desc = 'Toggle Terminal' })
 end)
