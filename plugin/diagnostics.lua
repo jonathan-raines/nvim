@@ -13,7 +13,8 @@ vim.diagnostic.config({
       [vim.diagnostic.severity.INFO] = '',
     },
   },
-  underline = true
+  underline = true,
+  virtual_text = true
 })
 
 vim.keymap.set('n', '[e', function()

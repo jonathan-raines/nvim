@@ -23,7 +23,7 @@ MiniDeps.later(function()
   vim.keymap.set('n', '<leader>gf', function() Snacks.lazygit.log_file() end, { desc = 'Lazygit Current File History' })
   vim.keymap.set('n', '<leader>gg', function() Snacks.lazygit() end, { desc = 'Lazygit' })
   vim.keymap.set('n', '<leader>gl', function() Snacks.lazygit.log() end, { desc = 'Lazygit Log (cwd)' })
-  vim.keymap.set('n', "<leader>fh", function() Snacks.picker.git_status() end, { desc = "Git Status" })
+  -- vim.keymap.set('n', "<leader>fh", function() Snacks.picker.git_status() end, { desc = "Git Status" })
   --  ╭─────────────────────────────────────────────────────────╮
   --  │                     Picker                              │
   --  ╰─────────────────────────────────────────────────────────╯
