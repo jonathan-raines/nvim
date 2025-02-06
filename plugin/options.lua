@@ -93,6 +93,9 @@ opt.listchars:append {
   precedes = "«",
 }
 
+-- New diff options for better readability
+opt.diffopt = "internal,filler,closeoff,linematch:60" -- "filler,internal,closeoff,algorithm:histogram,context:5,linematch:60"
+
 --  ╭─────────────────────────────────────────────────────────╮
 --  │                     Global Options                      │
 --  ╰─────────────────────────────────────────────────────────╯
