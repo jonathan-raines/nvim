@@ -10,10 +10,11 @@ end
 
 MiniDeps.add({
   source = 'Saghen/blink.cmp',
-  hooks = {
-    post_install = build_blink,
-    post_checkout = build_blink,
-  },
+  checkout = 'v0.11.0',
+  -- hooks = {
+  --   post_install = build_blink,
+  --   post_checkout = build_blink,
+  -- },
 })
 
 MiniDeps.later(function()
