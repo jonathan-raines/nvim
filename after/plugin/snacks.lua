@@ -6,6 +6,11 @@ MiniDeps.later(function()
     statuscolumn = { enabled = true },
     words = { enabled = true },
     picker = {
+      formatters = {
+        file = {
+          truncate = 60
+        }
+      },
       win = {
         input = {
           keys = {
