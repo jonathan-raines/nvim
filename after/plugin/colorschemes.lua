@@ -1,16 +1,14 @@
 local add, now = MiniDeps.add, MiniDeps.now
 
-add { source = 'projekt0n/github-nvim-theme' }
-add { source = 'sainnhe/sonokai' }
 add { source = 'folke/tokyonight.nvim' }
+add { source = 'Mofiqul/dracula.nvim' }
 
 now(function()
-  require 'github-theme'.setup {}
-  require 'tokyonight'.setup {}
+  require 'tokyonight'.setup { transparent = true }
 
-  vim.g.sonokai_better_performance = 1
+  require 'dracula'.setup { transparent_bg = true }
 end)
 
 now(function()
-  vim.cmd.colorscheme 'github_dark_default'
+  vim.cmd.colorscheme 'tokyonight'
 end)
