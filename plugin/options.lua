@@ -95,12 +95,12 @@ opt.listchars:append {
 
 -- New diff options for better readability
 opt.diffopt =
-"internal,filler,closeoff,linematch:60"               -- "filler,internal,closeoff,algorithm:histogram,context:5,linematch:60"
+"internal,filler,closeoff,linematch:60" -- "filler,internal,closeoff,algorithm:histogram,context:5,linematch:60"
 
 --  ╭─────────────────────────────────────────────────────────╮
 --  │                     Global Options                      │
 --  ╰─────────────────────────────────────────────────────────╯
 vim.g.health = { style = 'float' }
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_gzip = 1
