@@ -42,7 +42,7 @@ opt.ignorecase     = true
 opt.smartcase      = true
 
 -- Set completeopt to have a better completion experience
-opt.completeopt    = { "menuone", "noselect" }
+opt.completeopt    = { "menuone", "noinsert" }
 
 -- Enable persistent undo history
 opt.undofile       = true
