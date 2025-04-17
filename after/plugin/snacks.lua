@@ -4,7 +4,7 @@ MiniDeps.later(function()
   require 'snacks'.setup {
     notifier = { enabled = true },
     statuscolumn = { enabled = true },
-    words = { enabled = true },
+    words = { enabled = false },
     picker = {
       formatters = {
         file = {
@@ -28,9 +28,8 @@ MiniDeps.later(function()
   --  ╭─────────────────────────────────────────────────────────╮
   --  │                     Git                                 │
   --  ╰─────────────────────────────────────────────────────────╯
-  vim.keymap.set('n', "<leader>gc", function() Snacks.picker.git_log() end, { desc = "Git Log" })
-  vim.keymap.set('n', '<leader>gf', function() Snacks.lazygit.log_file() end, { desc = 'Lazygit Current File History' })
   vim.keymap.set('n', '<leader>gg', function() Snacks.lazygit() end, { desc = 'Lazygit' })
+  vim.keymap.set('n', '<leader>gf', function() Snacks.lazygit.log_file() end, { desc = 'Lazygit Current File History' })
   vim.keymap.set('n', '<leader>gl', function() Snacks.lazygit.log() end, { desc = 'Lazygit Log (cwd)' })
   vim.keymap.set('n', "<leader>fh", function() Snacks.picker.git_status() end, { desc = "Git Status" })
   --  ╭─────────────────────────────────────────────────────────╮
@@ -43,6 +42,7 @@ MiniDeps.later(function()
   vim.keymap.set('n', "<leader>bl", function() Snacks.picker.buffers() end, { desc = "Buffers" })
   vim.keymap.set('n', "<leader>fb", function() Snacks.picker.grep_buffers() end, { desc = "Grep Open Buffers" })
   vim.keymap.set('n', "<leader>fc", function() Snacks.picker.commands() end, { desc = "Commands" })
+  vim.keymap.set('n', "<leader>fC", function() Snacks.picker.colorschemes() end, { desc = "Colorschemes" })
   vim.keymap.set('n', '<leader>ff', function() Snacks.picker.files() end, { desc = 'Files' })
   vim.keymap.set('n', "<leader>fo", function()
     Snacks.picker.recent { filter = { cwd = vim.fn.getcwd() } }
