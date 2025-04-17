@@ -11,6 +11,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.keymap.set(mode, lhs, rhs, { buffer = args.buf, desc = desc })
     end
 
+    keymap('<leader>li', function() vim.cmd.checkhealth 'lsp' end, 'LSP Info')
     keymap('<leader>ll', vim.diagnostic.setloclist, 'Diagnostic Local List')
     keymap('<leader>ls', function() vim.lsp.stop_client(vim.lsp.get_clients()) end, 'Stop LSP Servers')
 
