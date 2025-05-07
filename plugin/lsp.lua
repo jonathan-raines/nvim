@@ -17,8 +17,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     keymap('<leader>ls', function() vim.lsp.stop_client(vim.lsp.get_clients()) end, 'Stop LSP Servers')
 
     -- Symbols
-      keymap("<leader>fs", function() Snacks.picker.lsp_symbols() end, "LSP Symbols")
     if client:supports_method(methods.textDocument_documentSymbol) then
+      keymap("<leader>fs", function() Snacks.picker.lsp_symbols() end, "LSP Symbols")
     end
 
     -- Inlay Hints
