@@ -86,7 +86,7 @@ opt.iskeyword:append("-")
 opt.list = true
 opt.listchars:append {
   tab = "┊ ",
-  leadmultispace = "┊ ", -- or "│ "
+  --   leadmultispace = "┊ ", -- or "│ "
   trail = "␣",
   nbsp = "⍽",
   extends = "»",
