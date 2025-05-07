@@ -40,6 +40,9 @@ MiniDeps.later(function()
   vim.keymap.set('n', "<leader>/", function() Snacks.picker.grep() end, { desc = "Grep" })
   vim.keymap.set('n', "<leader>f/", function() Snacks.picker.lines() end, { desc = "Buffer Lines" })
   vim.keymap.set('n', "<leader>bl", function() Snacks.picker.buffers() end, { desc = "Buffers" })
+  vim.keymap.set('n', "<leader>fa", function()
+    Snacks.picker.smart { filter = { cwd = vim.fn.getcwd() }, multi = { "buffers", "recent", "files", "git_status" } }
+  end, { desc = "Smart" })
   vim.keymap.set('n', "<leader>fb", function() Snacks.picker.grep_buffers() end, { desc = "Grep Open Buffers" })
   vim.keymap.set('n', "<leader>fc", function() Snacks.picker.commands() end, { desc = "Commands" })
   vim.keymap.set('n', "<leader>fC", function() Snacks.picker.colorschemes() end, { desc = "Colorschemes" })
@@ -54,4 +57,6 @@ MiniDeps.later(function()
   --  │                     Terminal                            │
   --  ╰─────────────────────────────────────────────────────────╯
   vim.keymap.set({ 'n', 't' }, '<c-\\>', function() Snacks.terminal() end, { desc = 'Toggle Terminal' })
+
+  vim.cmd([[au FileType snacks_picker_input lua vim.b.minicompletion_disable = true]])
 end)
