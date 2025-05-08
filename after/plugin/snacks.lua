@@ -2,6 +2,7 @@ MiniDeps.add { source = 'folke/snacks.nvim' }
 
 MiniDeps.later(function()
   require 'snacks'.setup {
+    indent = { enabled = true },
     notifier = { enabled = true },
     statuscolumn = { enabled = true },
     words = { enabled = false },
@@ -57,6 +58,4 @@ MiniDeps.later(function()
   --  │                     Terminal                            │
   --  ╰─────────────────────────────────────────────────────────╯
   vim.keymap.set({ 'n', 't' }, '<c-\\>', function() Snacks.terminal() end, { desc = 'Toggle Terminal' })
-
-  vim.cmd([[au FileType snacks_picker_input lua vim.b.minicompletion_disable = true]])
 end)
