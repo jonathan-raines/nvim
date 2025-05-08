@@ -6,9 +6,9 @@ MiniDeps.now(function()
     options = { use_as_default_explorer = true }
   }
 
-  vim.keymap.set('n', '<leader>e', '<cmd>lua MiniFiles.open()<CR>', { desc = 'File Explorer' })
-  vim.keymap.set('n', '-', '<cmd>lua MiniFiles.open(vim.api.nvim_buf_get_name(0), true)<CR>',
-    { desc = 'Mini Files Current Directory' })
+  vim.keymap.set('n', '<leader>e', function()
+    require('mini.files').open(vim.api.nvim_buf_get_name(0), true)
+  end, { desc = 'File Explorer' })
 
   --  ╭─────────────────────────────────────────────────────────╮
   --  │                     Mini.Icons                          │
@@ -49,6 +49,13 @@ MiniDeps.later(function()
   require 'mini.pairs'.setup {
     modes = { insert = true, command = true, terminal = false }
   }
+
+  --  ╭─────────────────────────────────────────────────────────╮
+  --  │                     Mini.Git                            │
+  --  ╰─────────────────────────────────────────────────────────╯
+  require 'mini.git'.setup {}
+  vim.keymap.set("n", "<leader>hc", function() require 'mini.git'.show_at_cursor() end, { desc = "Show at Cursor" })
+  vim.keymap.set("n", "<leader>hh", function() require 'mini.git'.show_range_history() end, { desc = "Range History" })
 
   --  ╭─────────────────────────────────────────────────────────╮
   --  │                     Mini.HiPatterns                     │
@@ -103,4 +110,34 @@ MiniDeps.later(function()
     end
     vim.cmd("edit")
   end, { desc = "Toggle Password Cloaking" })
+
+  --  ╭─────────────────────────────────────────────────────────╮
+  --  │                     Mini.IndentScope                    │
+  --  ╰─────────────────────────────────────────────────────────╯
+  require 'mini.indentscope'.setup {}
+
+  --  ╭─────────────────────────────────────────────────────────╮
+  --  │                     Mini.Pick                           │
+  --  ╰─────────────────────────────────────────────────────────╯
+  require 'mini.pick'.setup {}
+  require 'mini.extra'.setup {}
+  vim.keymap.set('n', '<c-p>', function() vim.cmd('Pick files') end, { desc = '[PICK] - Files' })
+  vim.keymap.set('n', '<leader>o', function() vim.cmd('Pick oldfiles current_dir=true') end,
+    { desc = '[PICK] - Oldfiles' })
+
+  --  ╭─────────────────────────────────────────────────────────╮
+  --  │                     Mini.Surround                       │
+  --  ╰─────────────────────────────────────────────────────────╯
+  require 'mini.surround'.setup {}
+
+  --  ╭─────────────────────────────────────────────────────────╮
+  --  │                     Mini.Visits                         │
+  --  ╰─────────────────────────────────────────────────────────╯
+  local visits = require 'mini.visits'
+  visits.setup {}
+
+  vim.keymap.set('n', '<leader>vv', function() visits.add_label("core") end, { desc = 'Add to core' })
+  vim.keymap.set('n', '<leader>vV', function() visits.remove_label("core") end, { desc = 'Remove from core' })
+  vim.keymap.set('n', '<leader>vc', function() visits.select_path("", { filter = "core" }) end, { desc = 'Sel All' })
+  vim.keymap.set('n', '<leader>vC', function() visits.select_path(nil, { filter = "core" }) end, { desc = 'Sel CWD' })
 end)
