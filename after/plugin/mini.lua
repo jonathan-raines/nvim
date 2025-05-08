@@ -13,12 +13,8 @@ MiniDeps.now(function()
   --  ╭─────────────────────────────────────────────────────────╮
   --  │                     Mini.Icons                          │
   --  ╰─────────────────────────────────────────────────────────╯
-  package.preload["nvim-web-devicons"] = function()
-    require("mini.icons").mock_nvim_web_devicons()
-    return package.loaded["nvim-web-devicons"]
-  end
-
   require 'mini.icons'.setup {}
+  require 'mini.icons'.mock_nvim_web_devicons()
 
   --  ╭─────────────────────────────────────────────────────────╮
   --  │                     Mini.Statusline                     │
@@ -46,6 +42,13 @@ MiniDeps.later(function()
   --  │                     Mini.Surround                       │
   --  ╰─────────────────────────────────────────────────────────╯
   require 'mini.surround'.setup {}
+
+  --  ╭─────────────────────────────────────────────────────────╮
+  --  │                     Mini.Pairs                          │
+  --  ╰─────────────────────────────────────────────────────────╯
+  require 'mini.pairs'.setup {
+    modes = { insert = true, command = true, terminal = false }
+  }
 
   --  ╭─────────────────────────────────────────────────────────╮
   --  │                     Mini.HiPatterns                     │
