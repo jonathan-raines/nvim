@@ -2,13 +2,9 @@ MiniDeps.now(function()
   --  ╭─────────────────────────────────────────────────────────╮
   --  │                     Mini.Files                          │
   --  ╰─────────────────────────────────────────────────────────╯
-  require 'mini.files'.setup {
-    options = { use_as_default_explorer = true }
-  }
+  require 'mini.files'.setup {}
 
-  vim.keymap.set('n', '<leader>e', '<cmd>lua MiniFiles.open()<CR>', { desc = 'File Explorer' })
-  vim.keymap.set('n', '-', '<cmd>lua MiniFiles.open(vim.api.nvim_buf_get_name(0), true)<CR>',
-    { desc = 'Mini Files Current Directory' })
+  vim.keymap.set('n', '-', '<cmd>lua MiniFiles.open(vim.api.nvim_buf_get_name(0), true)<CR>', { desc = 'File Explorer' })
 
   --  ╭─────────────────────────────────────────────────────────╮
   --  │                     Mini.Icons                          │
@@ -17,14 +13,14 @@ MiniDeps.now(function()
   require 'mini.icons'.mock_nvim_web_devicons()
 
   --  ╭─────────────────────────────────────────────────────────╮
-  --  │                     Mini.Statusline                     │
-  --  ╰─────────────────────────────────────────────────────────╯
-  require 'mini.statusline'.setup {}
-
-  --  ╭─────────────────────────────────────────────────────────╮
   --  │                     Mini.SplitJoin                      │
   --  ╰─────────────────────────────────────────────────────────╯
   require 'mini.splitjoin'.setup {}
+
+  --  ╭─────────────────────────────────────────────────────────╮
+  --  │                     Mini.Statusline                     │
+  --  ╰─────────────────────────────────────────────────────────╯
+  require 'mini.statusline'.setup {}
 end)
 
 MiniDeps.later(function()
@@ -34,21 +30,16 @@ MiniDeps.later(function()
   require 'mini.completion'.setup {}
 
   --  ╭─────────────────────────────────────────────────────────╮
-  --  │                     Mini.IndentScope                    │
+  --  │                     Mini.Diff                           │
   --  ╰─────────────────────────────────────────────────────────╯
-  -- require 'mini.indentscope'.setup {}
-
-  --  ╭─────────────────────────────────────────────────────────╮
-  --  │                     Mini.Surround                       │
-  --  ╰─────────────────────────────────────────────────────────╯
-  require 'mini.surround'.setup {}
-
-  --  ╭─────────────────────────────────────────────────────────╮
-  --  │                     Mini.Pairs                          │
-  --  ╰─────────────────────────────────────────────────────────╯
-  require 'mini.pairs'.setup {
-    modes = { insert = true, command = true, terminal = false }
+  require 'mini.diff'.setup {
+    -- view = {
+    --   style = "sign",
+    --   signs = { add = "█", change = "▒", delete = "" },
+    --   signs = { add = '+', change = '~', delete = '-' },
+    -- }
   }
+  vim.keymap.set("n", "<leader>ht", function() require 'mini.diff'.toggle_overlay() end, { desc = "Toggle Overlay" })
 
   --  ╭─────────────────────────────────────────────────────────╮
   --  │                     Mini.HiPatterns                     │
@@ -95,6 +86,7 @@ MiniDeps.later(function()
       hex_color = hipatterns.gen_highlighter.hex_color(),
     },
   })
+
   vim.keymap.set("n", "<leader>tp", function()
     if next(hipatterns.config.highlighters.pw) == nil then
       hipatterns.config.highlighters.pw = password_table
@@ -103,4 +95,36 @@ MiniDeps.later(function()
     end
     vim.cmd("edit")
   end, { desc = "Toggle Password Cloaking" })
+
+  --  ╭─────────────────────────────────────────────────────────╮
+  --  │                     Mini.IndentScope                    │
+  --  ╰─────────────────────────────────────────────────────────╯
+  require 'mini.indentscope'.setup {}
+
+  --  ╭─────────────────────────────────────────────────────────╮
+  --  │                     Mini.Pick                           │
+  --  ╰─────────────────────────────────────────────────────────╯
+  require 'mini.pick'.setup {}
+  require 'mini.extra'.setup {}
+  vim.keymap.set('n', '<c-p>', function() vim.cmd('Pick files') end, { desc = '[PICK] - Files' })
+  vim.keymap.set('n', '<leader>o', function() vim.cmd('Pick oldfiles current_dir=true') end, { desc = '[PICK] - Oldfiles' })
+
+  --  ╭─────────────────────────────────────────────────────────╮
+  --  │                     Mini.Surround                       │
+  --  ╰─────────────────────────────────────────────────────────╯
+  require 'mini.surround'.setup {}
+
+  --  ╭─────────────────────────────────────────────────────────╮
+  --  │                     Mini.Visits                         │
+  --  ╰─────────────────────────────────────────────────────────╯
+  require 'mini.visits'.setup {}
+  local map_vis = function(keys, call, desc)
+    local rhs = '<Cmd>lua MiniVisits.' .. call .. '<CR>'
+    vim.keymap.set('n', '<Leader>' .. keys, rhs, { desc = desc })
+  end
+
+  map_vis('vv', 'add_label("core")', 'Add to core')
+  map_vis('vV', 'remove_label("core")', 'Remove from core')
+  map_vis('vc', 'select_path("", { filter = "core" })', 'Select core (all)')
+  map_vis('vC', 'select_path(nil, { filter = "core" })', 'Select core (cwd)')
 end)
