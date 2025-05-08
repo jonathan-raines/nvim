@@ -4,7 +4,9 @@ MiniDeps.now(function()
   --  ╰─────────────────────────────────────────────────────────╯
   require 'mini.files'.setup {}
 
-  vim.keymap.set('n', '-', '<cmd>lua MiniFiles.open(vim.api.nvim_buf_get_name(0), true)<CR>', { desc = 'File Explorer' })
+  vim.keymap.set('n', '<leader>e', function()
+    require('mini.files').open(vim.api.nvim_buf_get_name(0), true)
+  end, { desc = 'File Explorer' })
 
   --  ╭─────────────────────────────────────────────────────────╮
   --  │                     Mini.Icons                          │
@@ -40,6 +42,13 @@ MiniDeps.later(function()
     -- }
   }
   vim.keymap.set("n", "<leader>ht", function() require 'mini.diff'.toggle_overlay() end, { desc = "Toggle Overlay" })
+
+  --  ╭─────────────────────────────────────────────────────────╮
+  --  │                     Mini.Git                            │
+  --  ╰─────────────────────────────────────────────────────────╯
+  require 'mini.git'.setup {}
+  vim.keymap.set("n", "<leader>hc", function() require 'mini.git'.show_at_cursor() end, { desc = "Show at Cursor" })
+  vim.keymap.set("n", "<leader>hh", function() require 'mini.git'.show_range_history() end, { desc = "Range History" })
 
   --  ╭─────────────────────────────────────────────────────────╮
   --  │                     Mini.HiPatterns                     │
@@ -107,7 +116,8 @@ MiniDeps.later(function()
   require 'mini.pick'.setup {}
   require 'mini.extra'.setup {}
   vim.keymap.set('n', '<c-p>', function() vim.cmd('Pick files') end, { desc = '[PICK] - Files' })
-  vim.keymap.set('n', '<leader>o', function() vim.cmd('Pick oldfiles current_dir=true') end, { desc = '[PICK] - Oldfiles' })
+  vim.keymap.set('n', '<leader>o', function() vim.cmd('Pick oldfiles current_dir=true') end,
+    { desc = '[PICK] - Oldfiles' })
 
   --  ╭─────────────────────────────────────────────────────────╮
   --  │                     Mini.Surround                       │
@@ -117,14 +127,11 @@ MiniDeps.later(function()
   --  ╭─────────────────────────────────────────────────────────╮
   --  │                     Mini.Visits                         │
   --  ╰─────────────────────────────────────────────────────────╯
-  require 'mini.visits'.setup {}
-  local map_vis = function(keys, call, desc)
-    local rhs = '<Cmd>lua MiniVisits.' .. call .. '<CR>'
-    vim.keymap.set('n', '<Leader>' .. keys, rhs, { desc = desc })
-  end
+  local visits = require 'mini.visits'
+  visits.setup {}
 
-  map_vis('vv', 'add_label("core")', 'Add to core')
-  map_vis('vV', 'remove_label("core")', 'Remove from core')
-  map_vis('vc', 'select_path("", { filter = "core" })', 'Select core (all)')
-  map_vis('vC', 'select_path(nil, { filter = "core" })', 'Select core (cwd)')
+  vim.keymap.set('n', '<leader>vv', function() visits.add_label("core") end, { desc = 'Add to core' })
+  vim.keymap.set('n', '<leader>vV', function() visits.remove_label("core") end, { desc = 'Remove from core' })
+  vim.keymap.set('n', '<leader>vc', function() visits.select_path("", { filter = "core" }) end, { desc = 'Sel All' })
+  vim.keymap.set('n', '<leader>vC', function() visits.select_path(nil, { filter = "core" }) end, { desc = 'Sel CWD' })
 end)
