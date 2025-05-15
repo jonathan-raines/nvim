@@ -82,17 +82,6 @@ opt.formatoptions:remove "o"
 -- Dash as part of the word
 opt.iskeyword:append("-")
 
--- Use special characters to represent things like tabs or trailing spaces
-opt.list = true
-opt.listchars:append {
-  tab = "┊ ",
-  --   leadmultispace = "┊ ", -- or "│ "
-  trail = "␣",
-  nbsp = "⍽",
-  extends = "»",
-  precedes = "«",
-}
-
 -- New diff options for better readability
 opt.diffopt =
 "internal,filler,closeoff,linematch:60" -- "filler,internal,closeoff,algorithm:histogram,context:5,linematch:60"
