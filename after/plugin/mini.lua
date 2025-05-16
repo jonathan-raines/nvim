@@ -2,9 +2,7 @@ MiniDeps.now(function()
   --  ╭─────────────────────────────────────────────────────────╮
   --  │                     Mini.Files                          │
   --  ╰─────────────────────────────────────────────────────────╯
-  require 'mini.files'.setup {
-    options = { use_as_default_explorer = true }
-  }
+  require 'mini.files'.setup {}
 
   vim.keymap.set('n', '<leader>e', function()
     require('mini.files').open(vim.api.nvim_buf_get_name(0), true)
@@ -32,30 +30,6 @@ MiniDeps.later(function()
   --  │                     Mini.Completion                     │
   --  ╰─────────────────────────────────────────────────────────╯
   require 'mini.completion'.setup {}
-
-  --  ╭─────────────────────────────────────────────────────────╮
-  --  │                     Mini.IndentScope                    │
-  --  ╰─────────────────────────────────────────────────────────╯
-  -- require 'mini.indentscope'.setup {}
-
-  --  ╭─────────────────────────────────────────────────────────╮
-  --  │                     Mini.Surround                       │
-  --  ╰─────────────────────────────────────────────────────────╯
-  require 'mini.surround'.setup {}
-
-  --  ╭─────────────────────────────────────────────────────────╮
-  --  │                     Mini.Pairs                          │
-  --  ╰─────────────────────────────────────────────────────────╯
-  require 'mini.pairs'.setup {
-    modes = { insert = true, command = true, terminal = false }
-  }
-
-  --  ╭─────────────────────────────────────────────────────────╮
-  --  │                     Mini.Git                            │
-  --  ╰─────────────────────────────────────────────────────────╯
-  require 'mini.git'.setup {}
-  vim.keymap.set("n", "<leader>hc", function() require 'mini.git'.show_at_cursor() end, { desc = "Show at Cursor" })
-  vim.keymap.set("n", "<leader>hh", function() require 'mini.git'.show_range_history() end, { desc = "Range History" })
 
   --  ╭─────────────────────────────────────────────────────────╮
   --  │                     Mini.HiPatterns                     │
@@ -112,32 +86,14 @@ MiniDeps.later(function()
   end, { desc = "Toggle Password Cloaking" })
 
   --  ╭─────────────────────────────────────────────────────────╮
-  --  │                     Mini.IndentScope                    │
-  --  ╰─────────────────────────────────────────────────────────╯
-  require 'mini.indentscope'.setup {}
-
-  --  ╭─────────────────────────────────────────────────────────╮
-  --  │                     Mini.Pick                           │
-  --  ╰─────────────────────────────────────────────────────────╯
-  require 'mini.pick'.setup {}
-  require 'mini.extra'.setup {}
-  vim.keymap.set('n', '<c-p>', function() vim.cmd('Pick files') end, { desc = '[PICK] - Files' })
-  vim.keymap.set('n', '<leader>o', function() vim.cmd('Pick oldfiles current_dir=true') end,
-    { desc = '[PICK] - Oldfiles' })
-
-  --  ╭─────────────────────────────────────────────────────────╮
   --  │                     Mini.Surround                       │
   --  ╰─────────────────────────────────────────────────────────╯
   require 'mini.surround'.setup {}
 
   --  ╭─────────────────────────────────────────────────────────╮
-  --  │                     Mini.Visits                         │
+  --  │                     Mini.Pairs                          │
   --  ╰─────────────────────────────────────────────────────────╯
-  local visits = require 'mini.visits'
-  visits.setup {}
-
-  vim.keymap.set('n', '<leader>vv', function() visits.add_label("core") end, { desc = 'Add to core' })
-  vim.keymap.set('n', '<leader>vV', function() visits.remove_label("core") end, { desc = 'Remove from core' })
-  vim.keymap.set('n', '<leader>vc', function() visits.select_path("", { filter = "core" }) end, { desc = 'Sel All' })
-  vim.keymap.set('n', '<leader>vC', function() visits.select_path(nil, { filter = "core" }) end, { desc = 'Sel CWD' })
+  require 'mini.pairs'.setup {
+    modes = { insert = true, command = true, terminal = false }
+  }
 end)
