@@ -89,11 +89,4 @@ MiniDeps.later(function()
   --  │                     Mini.Surround                       │
   --  ╰─────────────────────────────────────────────────────────╯
   require 'mini.surround'.setup {}
-
-  --  ╭─────────────────────────────────────────────────────────╮
-  --  │                     Mini.Pairs                          │
-  --  ╰─────────────────────────────────────────────────────────╯
-  require 'mini.pairs'.setup {
-    modes = { insert = true, command = true, terminal = false }
-  }
 end)
