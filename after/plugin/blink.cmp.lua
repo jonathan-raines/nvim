@@ -1,6 +1,6 @@
 MiniDeps.add({
   source = 'Saghen/blink.cmp',
-  checkout = 'v1.0.0',
+  checkout = 'v1.3.1',
 })
 
 MiniDeps.later(function()
