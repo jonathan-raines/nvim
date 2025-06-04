@@ -1,31 +1,34 @@
 MiniDeps.add {
   source = 'nvim-treesitter/nvim-treesitter',
-  checkout = 'master',
+  checkout = 'main',
   hooks = { post_checkout = function() vim.cmd('TSUpdate') end },
 }
 
 MiniDeps.later(function()
-  require('nvim-treesitter.configs').setup({
-    auto_install = true,
-    ensure_installed = { 'lua', 'vimdoc' },
-    highlight = { enable = true },
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        init_selection = '<CR>',
-        scope_incremental = '<CR>',
-        node_incremental = '<TAB>',
-        node_decremental = '<Backspace>'
-      },
-      is_supported = function()
-        local mode = vim.api.nvim_get_mode().mode
-        if mode == "c" then
-          return false
-        end
-        return true
+  local languages = { 'ruby', 'json', 'gitcommit', 'markdown', 'stable' }
+
+  require('nvim-treesitter').install(languages)
+
+  vim.api.nvim_create_autocmd('FileType', {
+    group = vim.api.nvim_create_augroup('treesitter.setup', {}),
+    callback = function(args)
+      local buf = args.buf
+      local filetype = args.match
+
+      -- you need some mechanism to avoid running on buffers that do not
+      -- correspond to a language (like oil.nvim buffers), this implementation
+      -- checks if a parser exists for the current language
+      local language = vim.treesitter.language.get_lang(filetype) or filetype
+      if not vim.treesitter.language.add(language) then
+        return
       end
-    },
-    indent = { enable = true }
+
+      -- replicate `highlight = { enable = true }`
+      vim.treesitter.start(buf, language)
+
+      -- replicate `indent = { enable = true }`
+      vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end
   })
 end
 )
