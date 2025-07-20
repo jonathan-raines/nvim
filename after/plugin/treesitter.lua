@@ -1,34 +1,48 @@
-MiniDeps.add {
-  source = 'nvim-treesitter/nvim-treesitter',
-  checkout = 'main',
-  hooks = { post_checkout = function() vim.cmd('TSUpdate') end },
+vim.pack.add { { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = 'main' } }
+
+local ts_parsers = {
+  "bash",
+  "c",
+  "dockerfile",
+  "fish",
+  "git_config",
+  "git_rebase",
+  "gitattributes",
+  "gitcommit",
+  "gitignore",
+  "go",
+  "gomod",
+  "gosum",
+  "html",
+  "javascript",
+  "json",
+  "lua",
+  "make",
+  "markdown",
+  "python",
+  "rust",
+  "sql",
+  "toml",
+  "tsx",
+  "typescript",
+  "typst",
+  "vim",
+  "yaml",
+  "zig",
 }
 
-MiniDeps.later(function()
-  local languages = { 'ruby', 'json', 'gitcommit', 'markdown', 'stable' }
+local treesitter = require("nvim-treesitter")
+treesitter.install(ts_parsers)
 
-  require('nvim-treesitter').install(languages)
+vim.api.nvim_create_autocmd('PackChanged', { callback = function() treesitter.update() end })
 
-  vim.api.nvim_create_autocmd('FileType', {
-    group = vim.api.nvim_create_augroup('treesitter.setup', {}),
-    callback = function(args)
-      local buf = args.buf
-      local filetype = args.match
-
-      -- you need some mechanism to avoid running on buffers that do not
-      -- correspond to a language (like oil.nvim buffers), this implementation
-      -- checks if a parser exists for the current language
-      local language = vim.treesitter.language.get_lang(filetype) or filetype
-      if not vim.treesitter.language.add(language) then
-        return
-      end
-
-      -- replicate `highlight = { enable = true }`
-      vim.treesitter.start(buf, language)
-
-      -- replicate `indent = { enable = true }`
-      vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+vim.api.nvim_create_autocmd("FileType", { -- enable treesitter highlighting and indents
+  callback = function(args)
+    local filetype = args.match
+    local lang = vim.treesitter.language.get_lang(filetype) or filetype
+    if vim.treesitter.language.add(lang) then
+      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+      vim.treesitter.start()
     end
-  })
-end
-)
+  end
+})

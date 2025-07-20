@@ -3,24 +3,63 @@
 --  ╰─────────────────────────────────────────────────────────╯
 vim.loader.enable()
 
--- require('vim._extui').enable {}
+require('vim._extui').enable {}
 
 --  ╭─────────────────────────────────────────────────────────╮
---  │                     MiniDeps                            │
+--  │                     Neovim Options                      │
 --  ╰─────────────────────────────────────────────────────────╯
-local path_package = vim.fn.stdpath('data') .. '/site/'
-local mini_path = path_package .. 'pack/deps/start/mini.nvim'
+local opt            = vim.opt
+opt.autoread         = true
+opt.completeopt      = { "menuone", "noinsert", "fuzzy" }
+opt.expandtab        = true
+opt.hlsearch         = false
+opt.ignorecase       = true
+opt.inccommand       = 'split'
+opt.incsearch        = true
+opt.laststatus       = 0
+opt.shiftwidth       = 2
+opt.signcolumn       = 'yes'
+opt.smartcase        = true
+opt.softtabstop      = -1
+opt.splitbelow       = true
+opt.splitright       = true
+opt.swapfile         = false
+opt.tabstop          = 2
+opt.undofile         = true
+opt.undodir          = os.getenv 'HOME' .. '/.vim/undodir'
+opt.winborder        = 'rounded'
+opt.wrap             = false
 
----@diagnostic disable-next-line undefined-field
-if not vim.loop.fs_stat(mini_path) then
-  vim.cmd('echo "Installing `mini.nvim`" | redraw')
-  local clone_cmd = {
-    'git', 'clone', '--filter=blob:none',
-    'https://github.com/echasnovski/mini.nvim', mini_path
-  }
-  vim.fn.system(clone_cmd)
-  vim.cmd('packadd mini.nvim | helptags ALL')
-  vim.cmd('echo "Installed `mini.nvim`" | redraw')
+--  ╭─────────────────────────────────────────────────────────╮
+--  │                     Leader Key                          │
+--  ╰─────────────────────────────────────────────────────────╯
+vim.g.mapleader      = ' '
+vim.g.maplocalleader = ' '
+
+--  ╭─────────────────────────────────────────────────────────╮
+--  │                     Keymaps                             │
+--  ╰─────────────────────────────────────────────────────────╯
+local keymaps        = {
+  { 'n',          '<leader>bd', vim.cmd.bd,                                                 { desc = 'Delete Buffer' } },
+  { 'n',          '<leader>bD', [[:%bd|e#|bd#<cr>]],                                        { desc = 'Delete all listed buffers except current' } },
+  { 'n',          '<leader>bu', vim.cmd.update,                                             { desc = 'Update' } },
+  { 'n',          '<leader>e',  vim.cmd.Explore,                                            { desc = 'Netrw' } },
+  { 'n',          '<leader>pu', vim.pack.update,                                            { desc = 'Pack Update' } },
+  { 'n',          '<leader>s',  [[:%s/<C-r><C-w>/<C-r><C-w>/gI<Left><Left><Left>]],         { desc = 'Substitute under cursor', silent = false } },
+  { 'n',          'J',          [[mzJ`z]],                                                  { desc = 'Join on same line' } },
+  { 'n',          'gy',         ":call setreg('+', expand('%:.'))<CR>",                     { desc = 'Copy current file path to clipboard' } },
+  { 'n',          'gY',         ":call setreg('+', expand('%:.') .. ':' .. line('.'))<CR>", { desc = 'Copy current file path to clipboard' } },
+  { { 'n', 'x' }, '<leader>y',  [["+y]],                                                    { desc = 'Copy to system clipboard' } },
+  { { 'n', 'x' }, '<leader>p',  [["+p]],                                                    { desc = 'Paste from system clipboard' } },
+  { { 'n', 'x' }, '<leader>P',  [["+P]],                                                    { desc = 'Paste from system clipboard' } },
+  { 'x',          'p',          [["_dP]],                                                   { desc = 'Paste without replacing' } },
+  { 'x',          '<C-j>',      [[:m '>+1<CR>gv=gv]],                                       { desc = 'Move line up' } },
+  { 'x',          '<C-k>',      [[:m '<-2<CR>gv=gv]],                                       { desc = 'Move line down' } },
+  { 'x',          '<',          [[<gv]],                                                    { desc = 'Keep visual select indent decrease' } },
+  { 'x',          '>',          [[>gv]],                                                    { desc = 'Keep visual select indent increase' } },
+  { 'i',          '.',          [[.<C-g>u]],                                                { desc = 'Undo Break Point' } },
+}
+
+for _, val in pairs(keymaps) do
+  vim.keymap.set(val[1], val[2], val[3], val[4])
 end
-
-require('mini.deps').setup { path = { package = path_package } }

@@ -6,7 +6,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local client = vim.lsp.get_client_by_id(args.data.client_id) or {}
     local methods = vim.lsp.protocol.Methods
 
-    -- Keymaps
     local function keymap(lhs, rhs, desc, mode)
       mode = mode or 'n'
       vim.keymap.set(mode, lhs, rhs, { buffer = args.buf, desc = desc })
@@ -16,12 +15,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
     keymap('<leader>ll', vim.diagnostic.setloclist, 'Diagnostic Local List')
     keymap('<leader>ls', function() vim.lsp.stop_client(vim.lsp.get_clients()) end, 'Stop LSP Servers')
 
-    -- Symbols
     if client:supports_method(methods.textDocument_documentSymbol) then
-      keymap("<leader>fs", function() Snacks.picker.lsp_symbols() end, "LSP Symbols")
+      keymap("<leader>fs", function() vim.cmd.FzfLua 'lsp_document_symbols' end, "LSP Symbols")
     end
 
-    -- Inlay Hints
     if client:supports_method(methods.textDocument_inlayHint) then
       keymap('<leader>lh', function()
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ 0 }))
@@ -30,7 +27,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     if client:supports_method(methods.textDocument_formatting) or client.name == 'solargraph' then
       if client.name ~= 'tsserver' then
-        -- Format the current buffer on save
         vim.api.nvim_create_autocmd('BufWritePre', {
           buffer = args.buf,
           callback = function()
@@ -41,6 +37,21 @@ vim.api.nvim_create_autocmd('LspAttach', {
         keymap('<leader>lf', vim.lsp.buf.format, 'Diagnostic Local List')
       end
     end
+
+    if client:supports_method(methods.textDocument_completion) then
+      local chars = {}
+      for i = 32, 126 do
+        table.insert(chars, string.char(i))
+      end
+
+      client.server_capabilities.completionProvider.triggerCharacters = chars
+      vim.lsp.completion.enable(true, client.id, args.buf, {
+        autotrigger = true,
+        convert = function(item)
+          return { abbr = item.label:gsub('%b()', '') }
+        end,
+      })
+    end
   end,
 })
 
@@ -49,11 +60,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
 --  ╰─────────────────────────────────────────────────────────╯
 vim.api.nvim_create_autocmd('LspDetach', {
   callback = function(args)
-    -- Get the detaching client
     local client = vim.lsp.get_client_by_id(args.data.client_id) or {}
     local methods = vim.lsp.protocol.Methods
 
-    -- Remove the autocommand to format the buffer on save, if it exists
     if client:supports_method(methods.textDocument_formatting) then
       vim.api.nvim_clear_autocmds({
         event = 'BufWritePre',
@@ -68,6 +77,10 @@ vim.api.nvim_create_autocmd('LspDetach', {
     -- Inlay Hints
     if client:supports_method(methods.textDocument_inlayHint) then
       vim.keymap.del('n', '<leader>lh', { buffer = args.buf })
+    end
+
+    if client:supports_method(methods.textDocument_completion) then
+      vim.lsp.completion.enable(false, client.id, args.buf)
     end
   end
 })
