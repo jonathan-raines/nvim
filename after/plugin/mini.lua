@@ -12,11 +12,6 @@ require 'mini.icons'.mock_nvim_web_devicons()
 require 'mini.splitjoin'.setup {}
 
 --  ╭─────────────────────────────────────────────────────────╮
---  │                     Mini.Statusline                     │
---  ╰─────────────────────────────────────────────────────────╯
-require 'mini.statusline'.setup {}
-
---  ╭─────────────────────────────────────────────────────────╮
 --  │                     Mini.Surround                       │
 --  ╰─────────────────────────────────────────────────────────╯
 require 'mini.surround'.setup {}
