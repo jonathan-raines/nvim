@@ -7,6 +7,11 @@ require 'mini.icons'.setup {}
 require 'mini.icons'.mock_nvim_web_devicons()
 
 --  ╭─────────────────────────────────────────────────────────╮
+--  │                     Mini.Indentscope                    │
+--  ╰─────────────────────────────────────────────────────────╯
+require 'mini.indentscope'.setup {}
+
+--  ╭─────────────────────────────────────────────────────────╮
 --  │                     Mini.SplitJoin                      │
 --  ╰─────────────────────────────────────────────────────────╯
 require 'mini.splitjoin'.setup {}

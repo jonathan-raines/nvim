@@ -49,6 +49,7 @@ local keymaps        = {
   { 'n',          'J',          [[mzJ`z]],                                                  { desc = 'Join on same line' } },
   { 'n',          'gy',         ":call setreg('+', expand('%:.'))<CR>",                     { desc = 'Copy current file path to clipboard' } },
   { 'n',          'gY',         ":call setreg('+', expand('%:.') .. ':' .. line('.'))<CR>", { desc = 'Copy current file path to clipboard' } },
+  { 'n',          '<leader>li', function() vim.cmd.checkhealth 'lsp' end,                   { desc = 'LSP Info' } },
   { { 'n', 'x' }, '<leader>y',  [["+y]],                                                    { desc = 'Copy to system clipboard' } },
   { { 'n', 'x' }, '<leader>p',  [["+p]],                                                    { desc = 'Paste from system clipboard' } },
   { { 'n', 'x' }, '<leader>P',  [["+P]],                                                    { desc = 'Paste from system clipboard' } },
