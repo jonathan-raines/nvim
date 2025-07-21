@@ -36,20 +36,20 @@ vim.api.nvim_create_autocmd('LspAttach', {
       end
     end
 
-    if client:supports_method(methods.textDocument_completion) then
-      local chars = {}
-      for i = 32, 126 do
-        table.insert(chars, string.char(i))
-      end
-
-      client.server_capabilities.completionProvider.triggerCharacters = chars
-      vim.lsp.completion.enable(true, client.id, args.buf, {
-        autotrigger = true,
-        convert = function(item)
-          return { abbr = item.label:gsub('%b()', '') }
-        end,
-      })
-    end
+    -- if client:supports_method(methods.textDocument_completion) then
+    --   local chars = {}
+    --   for i = 32, 126 do
+    --     table.insert(chars, string.char(i))
+    --   end
+    --
+    --   client.server_capabilities.completionProvider.triggerCharacters = chars
+    --   vim.lsp.completion.enable(true, client.id, args.buf, {
+    --     autotrigger = true,
+    --     convert = function(item)
+    --       return { abbr = item.label:gsub('%b()', '') }
+    --     end,
+    --   })
+    -- end
   end,
 })
 
@@ -77,9 +77,9 @@ vim.api.nvim_create_autocmd('LspDetach', {
       vim.keymap.del('n', '<leader>lh', { buffer = args.buf })
     end
 
-    if client:supports_method(methods.textDocument_completion) then
-      vim.lsp.completion.enable(false, client.id, args.buf)
-    end
+    -- if client:supports_method(methods.textDocument_completion) then
+    --   vim.lsp.completion.enable(false, client.id, args.buf)
+    -- end
   end
 })
 
