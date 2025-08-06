@@ -9,7 +9,9 @@ require('vim._extui').enable {}
 --  │                     Neovim Options                      │
 --  ╰─────────────────────────────────────────────────────────╯
 local opt            = vim.opt
+opt.autocomplete     = false
 opt.autoread         = true
+opt.complete         = ".,o" -- use buffer and omnifunc
 opt.completeopt      = { "menuone", "noinsert", "fuzzy" }
 opt.expandtab        = true
 opt.hlsearch         = false
