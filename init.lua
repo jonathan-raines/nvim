@@ -33,10 +33,11 @@ opt.winborder        = 'rounded'
 opt.wrap             = false
 
 --  ╭─────────────────────────────────────────────────────────╮
---  │                     Leader Key                          │
+--  │                     Global Options                      │
 --  ╰─────────────────────────────────────────────────────────╯
 vim.g.mapleader      = ' '
 vim.g.maplocalleader = ' '
+vim.g.health         = { style = 'float' }
 
 --  ╭─────────────────────────────────────────────────────────╮
 --  │                     Keymaps                             │
