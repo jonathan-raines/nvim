@@ -1,6 +1,4 @@
-vim.pack.add {
-  'https://github.com/ibhagwan/fzf-lua'
-}
+vim.pack.add({ 'https://github.com/ibhagwan/fzf-lua' }, { load = true })
 
 require 'fzf-lua'.setup {
   winopts = { height = 0.6, row = 1.0, col = 0.0 },

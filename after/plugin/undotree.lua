@@ -1,4 +1,4 @@
-vim.pack.add { 'https://github.com/mbbill/undotree' }
+vim.pack.add({ 'https://github.com/mbbill/undotree' }, { load = true })
 
 vim.g.undotree_SetFocusWhenToggle = 1
 
