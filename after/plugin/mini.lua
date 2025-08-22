@@ -1,87 +1,50 @@
-MiniDeps.now(function()
-  --  ╭─────────────────────────────────────────────────────────╮
-  --  │                     Mini.Files                          │
-  --  ╰─────────────────────────────────────────────────────────╯
-  require 'mini.files'.setup {}
+vim.pack.add { 'https://github.com/echasnovski/mini.nvim' }
 
-  vim.keymap.set('n', '<leader>e', function()
-    require('mini.files').open(vim.api.nvim_buf_get_name(0), true)
-  end, { desc = 'File Explorer' })
+--  ╭─────────────────────────────────────────────────────────╮
+--  │                     Mini.Completion                     │
+--  ╰─────────────────────────────────────────────────────────╯
+require 'mini.completion'.setup {}
 
-  --  ╭─────────────────────────────────────────────────────────╮
-  --  │                     Mini.Icons                          │
-  --  ╰─────────────────────────────────────────────────────────╯
-  require 'mini.icons'.setup {}
-  require 'mini.icons'.mock_nvim_web_devicons()
+--  ╭─────────────────────────────────────────────────────────╮
+--  │                     Mini.Diff                           │
+--  ╰─────────────────────────────────────────────────────────╯
+require 'mini.diff'.setup {}
 
-  --  ╭─────────────────────────────────────────────────────────╮
-  --  │                     Mini.Statusline                     │
-  --  ╰─────────────────────────────────────────────────────────╯
-  require 'mini.statusline'.setup {}
+--  ╭─────────────────────────────────────────────────────────╮
+--  │                     Mini.Icons                          │
+--  ╰─────────────────────────────────────────────────────────╯
+require 'mini.icons'.setup {}
+require 'mini.icons'.mock_nvim_web_devicons()
 
-  --  ╭─────────────────────────────────────────────────────────╮
-  --  │                     Mini.SplitJoin                      │
-  --  ╰─────────────────────────────────────────────────────────╯
-  require 'mini.splitjoin'.setup {}
-end)
+--  ╭─────────────────────────────────────────────────────────╮
+--  │                     Mini.Indentscope                    │
+--  ╰─────────────────────────────────────────────────────────╯
+require 'mini.indentscope'.setup {}
 
-MiniDeps.later(function()
-  --  ╭─────────────────────────────────────────────────────────╮
-  --  │                     Mini.HiPatterns                     │
-  --  ╰─────────────────────────────────────────────────────────╯
-  local hipatterns = require("mini.hipatterns")
+--  ╭─────────────────────────────────────────────────────────╮
+--  │                     Mini.Pick                           │
+--  ╰─────────────────────────────────────────────────────────╯
+require 'mini.pick'.setup {}
+require 'mini.extra'.setup {}
+vim.keymap.set('n', '<leader>pd', function() vim.cmd.Pick 'diagnostic' end, { desc = '[Pick] Diagnostic' })
+vim.keymap.set('n', '<leader>pf', function() vim.cmd.Pick 'files' end, { desc = '[Pick] Files' })
+vim.keymap.set('n', '<leader>po', function() vim.cmd('Pick oldfiles current_dir=true') end, { desc = '[Pick] Old Files' })
+vim.keymap.set('n', '<leader>pe', function() vim.cmd.Pick 'explorer' end, { desc = '[Pick] Explorer' })
+vim.keymap.set('n', '<leader>ps', function() vim.cmd("Pick lsp scope='document_symbol'") end, { desc = '[Pick] Symbols' })
+vim.keymap.set('n', '<leader>p/', function() vim.cmd.Pick 'buf_lines' end, { desc = '[Pick] Grep Buffer' })
+-- vim.keymap.set('n', '<leader>/', function() vim.cmd.Pick 'grep_live' end, { desc = '[Pick] Grep' })
 
-  local censor_extmark_opts = function(_, match, _)
-    local mask = string.rep("*", vim.fn.strchars(match))
-    return {
-      virt_text = { { mask, "Comment" } },
-      virt_text_pos = "overlay",
-      priority = 200,
-      right_gravity = false,
-    }
-  end
+--  ╭─────────────────────────────────────────────────────────╮
+--  │                     Mini.SplitJoin                      │
+--  ╰─────────────────────────────────────────────────────────╯
+require 'mini.splitjoin'.setup {}
 
-  local password_table = {
-    pattern = {
-      "password: ()%S+()",
-      "password_usr: ()%S+()",
-      "_pw: ()%S+()",
-      "password_asgard_read: ()%S+()",
-      "password_elara_admin: ()%S+()",
-      "gpg_pass: ()%S+()",
-      "passwd: ()%S+()",
-      "secret: ()%S+()",
-    },
-    group = "",
-    extmark_opts = censor_extmark_opts,
-  }
+--  ╭─────────────────────────────────────────────────────────╮
+--  │                     Mini.Statusline                     │
+--  ╰─────────────────────────────────────────────────────────╯
+require 'mini.statusline'.setup {}
 
-  hipatterns.setup({
-    highlighters = {
-      -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
-      fixme = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
-      hack = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
-      todo = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
-      note = { pattern = "%f[%w]()NOTE()%f[%W]", group = "MiniHipatternsNote" },
-
-      -- Cloaking Passwords
-      pw = password_table,
-
-      -- Highlight hex color strings (`#rrggbb`) using that color
-      hex_color = hipatterns.gen_highlighter.hex_color(),
-    },
-  })
-  vim.keymap.set("n", "<leader>tp", function()
-    if next(hipatterns.config.highlighters.pw) == nil then
-      hipatterns.config.highlighters.pw = password_table
-    else
-      hipatterns.config.highlighters.pw = {}
-    end
-    vim.cmd("edit")
-  end, { desc = "Toggle Password Cloaking" })
-
-  --  ╭─────────────────────────────────────────────────────────╮
-  --  │                     Mini.Surround                       │
-  --  ╰─────────────────────────────────────────────────────────╯
-  require 'mini.surround'.setup {}
-end)
+--  ╭─────────────────────────────────────────────────────────╮
+--  │                     Mini.Surround                       │
+--  ╰─────────────────────────────────────────────────────────╯
+require 'mini.surround'.setup {}
