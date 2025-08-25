@@ -1,20 +1,11 @@
 vim.pack.add({ 'https://github.com/ibhagwan/fzf-lua' }, { load = true })
 
 require 'fzf-lua'.setup {
-  -- winopts = { height = 0.6, row = 1.0, col = 0.0 },
   keymap = {
     fzf = {
       ["ctrl-q"] = "select-all+accept",
     }
-  },
-  -- oldfiles = {
-  --   include_current_session = true,
-  -- },
-  -- previewers = {
-  --   builtin = {
-  --     syntax_limit_b = 1024 * 100, -- 100KB
-  --   },
-  -- }
+  }
 }
 
 require("fzf-lua").register_ui_select()
@@ -27,6 +18,7 @@ local keymaps = {
   { 'n', '<leader>fD',       function() vim.cmd.FzfLua 'lsp_workspace_diagnostics' end, { desc = 'Workspace diagnostics' } },
   { 'n', '<leader>ff',       function() vim.cmd.FzfLua 'files' end,                     { desc = '[FzfLua] Find Files' } },
   { 'n', '<leader>fh',       function() vim.cmd.FzfLua 'git_status' end,                { desc = '[FzfLua] Git Status' } },
+  { 'n', '<leader>fm',       function() vim.cmd.FzfLua 'marks' end,                     { desc = '[FzfLua] Marks' } },
   { 'n', '<leader>fo',       function() vim.cmd('FzfLua oldfiles cwd_only=true') end,   { desc = '[FzfLua] Old Files' } },
   { 'n', '<leader>fr',       function() vim.cmd.FzfLua 'resume' end,                    { desc = '[FzfLua] Resume' } },
   { 'n', '<leader>ft',       function() vim.cmd.FzfLua 'tabs' end,                      { desc = '[FzfLua] Tabs' } },
