@@ -1,3 +1,3 @@
-vim.pack.add { 'https://github.com/EdenEast/nightfox.nvim' }
+vim.pack.add { 'https://github.com/folke/tokyonight.nvim' }
 
-vim.cmd.colorscheme 'nightfox'
+vim.cmd.colorscheme 'tokyonight-night'
