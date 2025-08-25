@@ -8,41 +8,44 @@ require('vim._extui').enable {}
 --  ╭─────────────────────────────────────────────────────────╮
 --  │                     Neovim Options                      │
 --  ╰─────────────────────────────────────────────────────────╯
-local opt            = vim.opt
-opt.autocomplete     = false
-opt.autoread         = true
-opt.complete         = ".,o" -- use buffer and omnifunc
-opt.completeopt      = { "menuone", "noinsert", "fuzzy" }
-opt.expandtab        = true
-opt.hlsearch         = false
-opt.ignorecase       = true
-opt.inccommand       = 'split'
-opt.incsearch        = true
-opt.laststatus       = 3
-opt.shiftwidth       = 2
-opt.signcolumn       = 'yes'
-opt.smartcase        = true
-opt.softtabstop      = -1
-opt.splitbelow       = true
-opt.splitright       = true
-opt.swapfile         = false
-opt.tabstop          = 2
-opt.undofile         = true
-opt.undodir          = os.getenv 'HOME' .. '/.vim/undodir'
-opt.winborder        = 'rounded'
-opt.wrap             = false
+local opt                = vim.opt
+opt.autocomplete         = false
+opt.autoread             = true
+opt.complete             = ".,o" -- use buffer and omnifunc
+opt.completeopt          = { "menuone", "noinsert", "fuzzy" }
+opt.expandtab            = true
+opt.hlsearch             = false
+opt.ignorecase           = true
+opt.inccommand           = 'split'
+opt.incsearch            = true
+opt.laststatus           = 3
+opt.shiftwidth           = 2
+opt.signcolumn           = 'yes'
+opt.smartcase            = true
+opt.softtabstop          = -1
+opt.splitbelow           = true
+opt.splitright           = true
+opt.swapfile             = false
+opt.tabstop              = 2
+opt.undofile             = true
+opt.undodir              = os.getenv 'HOME' .. '/.vim/undodir'
+opt.winborder            = 'rounded'
+opt.wrap                 = false
 
 --  ╭─────────────────────────────────────────────────────────╮
 --  │                     Global Options                      │
 --  ╰─────────────────────────────────────────────────────────╯
-vim.g.mapleader      = ' '
-vim.g.maplocalleader = ' '
-vim.g.health         = { style = 'float' }
+vim.g.mapleader          = ' '
+vim.g.maplocalleader     = ' '
+vim.g.health             = { style = 'float' }
+vim.g.loaded_netrw       = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_gzip        = 1
 
 --  ╭─────────────────────────────────────────────────────────╮
 --  │                     Keymaps                             │
 --  ╰─────────────────────────────────────────────────────────╯
-local keymaps        = {
+local keymaps            = {
   { 'n',          '<leader>bd', vim.cmd.bd,                                                 { desc = 'Delete Buffer' } },
   { 'n',          '<leader>bD', [[:%bd|e#|bd#<cr>]],                                        { desc = 'Delete all listed buffers except current' } },
   { 'n',          '<leader>bu', vim.cmd.update,                                             { desc = 'Update' } },
