@@ -1,8 +1,9 @@
-vim.pack.add { { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = 'main' } }
+vim.pack.add({ { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = 'main' } }, { load = true })
 
 local ts_parsers = {
   "bash",
   "c",
+  "comment",
   "dockerfile",
   "git_config",
   "git_rebase",
