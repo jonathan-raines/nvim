@@ -1,4 +1,4 @@
-vim.pack.add { 'https://github.com/echasnovski/mini.nvim' }
+vim.pack.add { 'https://github.com/nvim-mini/mini.nvim' }
 
 --  ╭─────────────────────────────────────────────────────────╮
 --  │                     Mini.Completion                     │
@@ -21,8 +21,10 @@ vim.keymap.set('n', '-', '<cmd>lua MiniFiles.open(vim.api.nvim_buf_get_name(0), 
 --  ╭─────────────────────────────────────────────────────────╮
 --  │                     Mini.Icons                          │
 --  ╰─────────────────────────────────────────────────────────╯
-require 'mini.icons'.setup {}
-require 'mini.icons'.mock_nvim_web_devicons()
+local mini_icons = require 'mini.icons'
+mini_icons.setup {}
+mini_icons.mock_nvim_web_devicons()
+mini_icons.tweak_lsp_kind()
 
 --  ╭─────────────────────────────────────────────────────────╮
 --  │                     Mini.Indentscope                    │
