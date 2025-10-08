@@ -75,4 +75,4 @@ vim.api.nvim_create_autocmd('LspDetach', {
 --  ╭─────────────────────────────────────────────────────────╮
 --  │                     LSP Servers                         │
 --  ╰─────────────────────────────────────────────────────────╯
-vim.lsp.enable({ "bashls", "eslint", "jsonls", "lua_ls", "marksman", "solargraph", "ts_ls", "vuels", "yamlls" })
+vim.lsp.enable({ "bashls", "eslint", "jsonls", "lua_ls", "marksman", "pyright", "solargraph", "ts_ls", "vuels", "yamlls" })
