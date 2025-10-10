@@ -45,13 +45,18 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_gzip        = 1
 
 --  ╭─────────────────────────────────────────────────────────╮
+--  │                     Builtin Plugins                     │
+--  ╰─────────────────────────────────────────────────────────╯
+vim.cmd.packadd 'nvim.undotree'
+
+--  ╭─────────────────────────────────────────────────────────╮
 --  │                     Keymaps                             │
 --  ╰─────────────────────────────────────────────────────────╯
-local keymaps            = {
+local keymaps = {
   { 'n',          '<leader>bd', vim.cmd.bd,                                                 { desc = 'Delete Buffer' } },
   { 'n',          '<leader>bD', [[:%bd|e#|bd#<cr>]],                                        { desc = 'Delete all listed buffers except current' } },
   { 'n',          '<leader>bu', vim.cmd.update,                                             { desc = 'Update' } },
-  { 'n',          '<leader>e',  vim.cmd.Explore,                                            { desc = 'Netrw' } },
+  { 'n',          '<leader>u',  vim.cmd.Undotree,                                           { desc = 'Undotree' } },
   { 'n',          '<leader>pu', vim.pack.update,                                            { desc = 'Pack Update' } },
   { 'n',          '<leader>s',  [[:%s/<C-r><C-w>/<C-r><C-w>/gI<Left><Left><Left>]],         { desc = 'Substitute under cursor', silent = false } },
   { 'n',          'J',          [[mzJ`z]],                                                  { desc = 'Join on same line' } },
