@@ -3,7 +3,7 @@ vim.pack.add { 'https://github.com/nvim-mini/mini.nvim' }
 --  ╭─────────────────────────────────────────────────────────╮
 --  │                     Mini.Completion                     │
 --  ╰─────────────────────────────────────────────────────────╯
--- require 'mini.completion'.setup {}
+require 'mini.completion'.setup {}
 
 --  ╭─────────────────────────────────────────────────────────╮
 --  │                     Mini.Diff                           │
